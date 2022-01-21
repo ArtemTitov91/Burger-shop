@@ -1,26 +1,24 @@
 .ingredients {
-    width: 600px;
-
-
+  width: 600px;
 }
 
-.list{
-    list-style: none;
-    padding: 0;
-    overflow-y: scroll;
-    height: 750px;
-    margin: 0;
+.list {
+  list-style: none;
+  padding: 0;
+  overflow-y: scroll;
+  height: 750px;
+  margin: 0;
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #2F2F37;
+  background: #2f2f37;
 }
 
-::-webkit-scrollbar-thumb{
-    background: #8585AD;
-    border-radius: 10px;
+::-webkit-scrollbar-thumb {
+  background: #8585ad;
+  border-radius: 10px;
 }
