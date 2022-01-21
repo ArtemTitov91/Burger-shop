@@ -1,20 +1,20 @@
 .pice {
-    width: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    margin: 0 0 40px 30px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 0 0 40px 30px;
 }
 
 .discription {
-width: 240px;
-display: flex;
-justify-content: center;
+  width: 240px;
+  display: flex;
+  justify-content: center;
 }
 
 .text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
