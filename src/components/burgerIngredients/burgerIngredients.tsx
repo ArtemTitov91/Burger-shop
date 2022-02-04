@@ -1,10 +1,9 @@
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import burgerIngredientsStyle from "./burgerIngredients.module.css";
 import BurgerElements from "../burgerElements/burgerElements";
 import BurgerPice from "../burgerPice/burgerPice";
-import arr from "../../utils/data";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import burgerIngredientsStyle from "./burgerIngredients.module.css";
 
 const TurnTab = () => {
   const [current, setCurrent] = React.useState("one");
@@ -23,33 +22,55 @@ const TurnTab = () => {
   );
 };
 
-const pice = arr.map((el) => {
-  return (
-    <BurgerPice
-      {...el}
-      key={el._id}
-      alt={el.name}
-      reactNode={<CurrencyIcon type="primary" />}
-    />
-  );
-});
-export const piceFilter = (element: any) =>
-  pice.filter((el) => {
-    return el.props.type === element;
-  });
+const createBurger = (items: any, type: string, oneClick: any) => {
+  return items
+    .filter((el: any) => {
+      return el.type === type;
+    })
+    .map((data: any) => (
+      <li key={data._id}>
+      <BurgerPice
+        oneClick={() => {
+          oneClick(data.image, data.name);
+        }}
+        alt={data.name}
+        reactNode={<CurrencyIcon type="primary" />}
+        price={data.price}
+        image={data.image}
+        name={data.name}
+      />
+      </li>
+    ));
+};
 
-const BurgerIngredients = () => {
+const BurgerIngredients = (props: any) => {
+  const { oneClick, items } = props;
+
   return (
     <div className={burgerIngredientsStyle.ingredients}>
       <h2 className="text text_type_main-large mb-5">Соберите Бургер</h2>
       <TurnTab />
       <ul className={burgerIngredientsStyle.list}>
-        <BurgerElements label="Булки" reactNode={piceFilter("bun")} />
-        <BurgerElements label="Соусы" reactNode={piceFilter("sauce")} />
-        <BurgerElements label="Начинки" reactNode={piceFilter("main")} />
+        <BurgerElements
+        key = '101'
+          label="Булки"
+          reactNode={createBurger(items, "bun", oneClick)}
+        />
+        <BurgerElements
+        key = '102'
+          label="Соусы"
+          reactNode={createBurger(items, "sauce", oneClick)}
+        />
+        <BurgerElements
+        key = '103'
+          label="Начинки"
+          reactNode={createBurger(items, "main", oneClick)}
+        />
       </ul>
     </div>
   );
 };
 
 export default BurgerIngredients;
+
+export { createBurger };

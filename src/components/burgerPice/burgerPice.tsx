@@ -1,11 +1,22 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import burgerPiceStyle from "./burgerPice.module.css";
 
-const BurgerPice = (props: any) => {
-  const { image, alt, price, reactNode, name } = props;
+type componentProps = {
+  image: string;
+  alt:string;
+  price:string;
+  name:string;
+  oneClick:any;
+  reactNode: ReactNode;
+  
+};
+
+
+const BurgerPice = (props: componentProps) => {
+  const { image, alt, price, reactNode, name, oneClick } = props;
 
   return (
-    <li className={burgerPiceStyle.pice}>
+    <div className={burgerPiceStyle.pice} onClick={oneClick}>
       <img className="mb-2" alt={alt} src={image}></img>
       <div className={burgerPiceStyle.discription}>
         <p
@@ -23,7 +34,7 @@ const BurgerPice = (props: any) => {
       >
         {name}
       </p>
-    </li>
+    </div>
   );
 };
 

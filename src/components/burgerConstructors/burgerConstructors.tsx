@@ -3,59 +3,60 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import arr from "../../utils/data";
 import burgerConstructor from "./burgerConstructor.module.css";
 import PayOrder from "../payOrder/payOrder";
 
-const burgerPices = arr.map((el) => {
-  if (el.type !== "bun") {
-    return (
-      <div key={el._id} className={burgerConstructor.burgerComponent}>
-        <DragIcon type="primary" />
-        <ConstructorElement
-          text={el.name}
-          price={el.price}
-          thumbnail={el.image_mobile}
-        />
-      </div>
-    );
-  }
-});
+const burgerPices = (items: any) =>
+  items.map((el: any) => {
+    if (el.type !== "bun") {
+      return (
+        <div key={el._id} className={burgerConstructor.burgerComponent}>
+          <DragIcon type="primary" />
+          <ConstructorElement
+            text={el.name}
+            price={el.price}
+            thumbnail={el.image_mobile}
+          />
+        </div>
+      );
+    }
+  });
 
-const burgerBun = (id: any) =>
-  arr.find((el) => {
+const burgerBun = (items: any, id: any) =>
+  items.find((el: any) => {
     return el._id === id;
   });
 
-export const bun = burgerBun("60666c42cc7b410027a1a9b1");
-
 const BurgerConstructors = (props: any) => {
-  const { bunObject } = props;
+  const { items, oneClick } = props;
+
+  const bun = burgerBun(items, "60d3b41abdacab0026a733c6");
+
   return (
     <div>
       <div className={burgerConstructor.burgerConstructor}>
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={bunObject.name + " (верх)"}
-          price={bunObject.price}
-          thumbnail={bunObject.image_mobile}
+          text={bun.name + " (верх)"}
+          price={bun.price}
+          thumbnail={bun.image_mobile}
         />
         <div
           style={{ display: "flex", flexDirection: "column", gap: "15px" }}
           className={burgerConstructor.burgerComponents}
         >
-          {burgerPices}
+          {burgerPices(items)}
         </div>
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={bunObject.name + " (низ)"}
-          price={bunObject.price}
-          thumbnail={bunObject.image_mobile}
+          text={bun.name + " (низ)"}
+          price={bun.price}
+          thumbnail={bun.image_mobile}
         />
       </div>
-      <PayOrder />
+      <PayOrder oneClick={oneClick} />
     </div>
   );
 };
