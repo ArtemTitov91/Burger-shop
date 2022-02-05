@@ -4,12 +4,12 @@ import {
   CheckMarkIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderDetails from "./orderDetails.module.css";
+import PropTypes from 'prop-types';
 // import Modal from '../modal/modal';
 
 
 
-const OrderDetails = (props: any) => {
-  const {oneClick} = props;
+const OrderDetails = ({oneClick}) => {
 
   return(
     <>
@@ -38,6 +38,10 @@ const OrderDetails = (props: any) => {
         <div className={ingredientDetails.discription}></div>
         </>
   )
+};
+
+OrderDetails.propTypes = {
+  oneClick: PropTypes.func.isRequired,
 };
 
 export default OrderDetails;

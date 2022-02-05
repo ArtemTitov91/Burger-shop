@@ -1,13 +1,10 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import headerItem from "./headerItems.module.css";
+import PropTypes from 'prop-types';
 
-type componentProps = {
-  link: string;
-  discription: string;
-  icon: ReactNode;
-};
 
-const HeaderItems = (props: componentProps) => {
+
+const HeaderItems = (props) => {
   const { link, discription, icon } = props;
 
   return (
@@ -16,6 +13,13 @@ const HeaderItems = (props: componentProps) => {
       {discription}
     </a>
   );
+
 };
 
 export default HeaderItems;
+
+HeaderItems.propTypes = {
+  icon: PropTypes.element.isRequired,
+  link: PropTypes.string.isRequired,
+  discription: PropTypes.string.isRequired,
+};

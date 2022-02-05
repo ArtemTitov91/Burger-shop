@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 
-const checkResponse = (res: any) => {
+const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   } else {
@@ -19,20 +19,20 @@ const config = {
 const useFetch = () => {
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<unknown>(null);
-  const [data, setData] = useState<any>(null);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
   useEffect(() => {
     setLoading(true);
     fetch(config.baseUrl, {
       headers: config.headers,
     })
       .then(checkResponse)
-      .then((data: any) => {
+      .then((data) => {
         setLoading(false)
         setData(data.data)
       }
       )
-      .catch((err: any) => {
+      .catch((err) => {
         setLoading(false)
         setError(error)
       }

@@ -1,19 +1,9 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import burgerPiceStyle from "./burgerPice.module.css";
+import PropTypes from 'prop-types';
+import {menuItemPropTypes} from '../../utils/constants';
 
-type componentProps = {
-  image: string;
-  alt:string;
-  price:string;
-  name:string;
-  oneClick:any;
-  reactNode: ReactNode;
-  
-};
-
-
-const BurgerPice = (props: componentProps) => {
-  const { image, alt, price, reactNode, name, oneClick } = props;
+const BurgerPice = ({ image, alt, price, reactNode, name, oneClick }) => {
 
   return (
     <div className={burgerPiceStyle.pice} onClick={oneClick}>
@@ -36,6 +26,16 @@ const BurgerPice = (props: componentProps) => {
       </p>
     </div>
   );
+};
+
+
+BurgerPice.propTypes = {
+  image: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  reactNode: PropTypes.element.isRequired,
+  name: PropTypes.string.isRequired,
+  oneClick: PropTypes.func.isRequired
 };
 
 export default BurgerPice;

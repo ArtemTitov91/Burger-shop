@@ -4,6 +4,7 @@ import burgerIngredientsStyle from "./burgerIngredients.module.css";
 import BurgerElements from "../burgerElements/burgerElements";
 import BurgerPice from "../burgerPice/burgerPice";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from 'prop-types';
 
 const TurnTab = () => {
   const [current, setCurrent] = React.useState("one");
@@ -22,12 +23,13 @@ const TurnTab = () => {
   );
 };
 
-const createBurger = (items: any, type: string, oneClick: any) => {
+
+const createBurger = (items, type, oneClick) => {
   return items
-    .filter((el: any) => {
+    .filter((el) => {
       return el.type === type;
     })
-    .map((data: any) => (
+    .map((data) => (
       <li key={data._id}>
       <BurgerPice
         oneClick={() => {
@@ -43,7 +45,15 @@ const createBurger = (items: any, type: string, oneClick: any) => {
     ));
 };
 
-const BurgerIngredients = (props: any) => {
+createBurger.propTypes = {
+  items: PropTypes.array.isRequired,
+  type: PropTypes.string.isRequired,
+  oneClick: PropTypes.func.isRequired,
+  el: PropTypes.array.isRequired
+}
+
+
+const BurgerIngredients = (props) => {
   const { oneClick, items } = props;
 
   return (
@@ -52,17 +62,17 @@ const BurgerIngredients = (props: any) => {
       <TurnTab />
       <ul className={burgerIngredientsStyle.list}>
         <BurgerElements
-        key = '101'
+        el = '101'
           label="Булки"
           reactNode={createBurger(items, "bun", oneClick)}
         />
         <BurgerElements
-        key = '102'
+        el = '102'
           label="Соусы"
           reactNode={createBurger(items, "sauce", oneClick)}
         />
         <BurgerElements
-        key = '103'
+        el = '103'
           label="Начинки"
           reactNode={createBurger(items, "main", oneClick)}
         />
@@ -70,6 +80,11 @@ const BurgerIngredients = (props: any) => {
     </div>
   );
 };
+
+BurgerIngredients.propTypes = {
+  items: PropTypes.array.isRequired,
+  oneClick: PropTypes.func.isRequired,
+}
 
 export default BurgerIngredients;
 

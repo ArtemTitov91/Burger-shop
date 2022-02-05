@@ -1,10 +1,10 @@
 import React from "react";
 import ingredientDetails from "./ingredientDetails.module.css";
+import PropTypes from 'prop-types';
 
 
+const IngredientDetails = ( {image, name }) => {
 
-const IngredientDetails = (props: any) => {
-  const { image, name } = props;
   return (
     
       <>
@@ -40,6 +40,11 @@ const IngredientDetails = (props: any) => {
       </div>
     </>
   )
+};
+
+IngredientDetails.propTypes = {
+  image: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default IngredientDetails;

@@ -8,8 +8,12 @@ import Modal from "../modal/modal";
 import { OrderDetails } from "../orderDetails";
 import { IngredientDetails } from "../ingredientDetails";
 
+
+
+
 const App = () => {
   const { loading, error, data } = useFetch();
+  
 
   const [order, setOrder] = useState({
     mainModal: false,
@@ -41,7 +45,7 @@ const App = () => {
         {data && (
           <BurgerIngredients
             items={data}
-            oneClick={(img: any, name: any) => {
+            oneClick={(img, name) => {
               setOrder({
                 ...order,
                 mainModal: true,
@@ -55,7 +59,7 @@ const App = () => {
         {data && (
           <BurgerConstructors
             items={data}
-            oneClick={(img: any, name: any) => {
+            oneClick={(img, name) => {
               setOrder({
                 ...order,
                 mainModal: true,
@@ -81,6 +85,8 @@ const App = () => {
       </Modal>
     </>
   );
+
 };
+
 
 export default App;
