@@ -7,7 +7,7 @@ import { ModalOverlay } from '../modalOverlay';
 
 const modalDom = document.getElementById("modals");
 
-const Modal = ({ oneClick, modal, children }) => {
+const Modal = ({ oneClick, modal, children}) => {
 
   useEffect(() => {
     document.addEventListener("keydown", escClose);
@@ -27,6 +27,7 @@ const Modal = ({ oneClick, modal, children }) => {
   };
 
   const escClose = (e) => {
+    e.preventDefault()
     if (e.key === "Escape") {
       { oneClick() };
     }
@@ -35,14 +36,9 @@ const Modal = ({ oneClick, modal, children }) => {
   return ReactDOM.createPortal(
     (<div className={modal ? modalStyle.modal : modalStyle.off}>
       <div className={modal ? modalStyle.modal : modalStyle.off}>
-        <div className={modalStyle.coverTitle}>
-          <p className={"text text_type_main-large " + modalStyle.title}>
-            Детали ингредиента
-          </p>
           <button onClick={oneClick} className={modalStyle.button}>
             <CloseIcon type={"primary"} />
           </button>
-        </div>
         {children}
       </div>
       <ModalOverlay />

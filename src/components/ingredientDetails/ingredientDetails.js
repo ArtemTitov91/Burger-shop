@@ -7,7 +7,8 @@ const IngredientDetails = ( {image, name }) => {
 
   return (
     
-      <>
+      <div className={ingredientDetails.ingredient}>
+        <p className={"text text_type_main-large " + ingredientDetails.title}>Детали ингридиента</p>
       <img src={image} alt={name}></img>
       <p className={"text text_type_main-medium " + ingredientDetails.text}>
         {name}
@@ -38,7 +39,7 @@ const IngredientDetails = ( {image, name }) => {
           <p className="text text_type_digits-default">10,2</p>
         </div>
       </div>
-    </>
+    </div>
   )
 };
 

@@ -1,14 +1,13 @@
 import React from "react";
-import burgerPiceStyle from "./burgerPice.module.css";
+import ingredientCard from "./ingredientCard.module.css";
 import PropTypes from 'prop-types';
-import {menuItemPropTypes} from '../../utils/constants';
 
-const BurgerPice = ({ image, alt, price, reactNode, name, oneClick }) => {
+const IngredientCard = ({ image, alt, price, reactNode, name, oneClick }) => {
 
   return (
-    <div className={burgerPiceStyle.pice} onClick={oneClick}>
+    <div className={ingredientCard.pice} onClick={oneClick}>
       <img className="mb-2" alt={alt} src={image}></img>
-      <div className={burgerPiceStyle.discription}>
+      <div className={ingredientCard.discription}>
         <p
           style={{ margin: 0 }}
           className='className="text text_type_digits-default'
@@ -19,7 +18,7 @@ const BurgerPice = ({ image, alt, price, reactNode, name, oneClick }) => {
       </div>
       <p
         className={
-          "mt-1 mb-1 text text_type_main-default " + burgerPiceStyle.text
+          "mt-1 mb-1 text text_type_main-default " + ingredientCard.text
         }
       >
         {name}
@@ -29,7 +28,7 @@ const BurgerPice = ({ image, alt, price, reactNode, name, oneClick }) => {
 };
 
 
-BurgerPice.propTypes = {
+IngredientCard.propTypes = {
   image: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
@@ -38,4 +37,4 @@ BurgerPice.propTypes = {
   oneClick: PropTypes.func.isRequired
 };
 
-export default BurgerPice;
+export default IngredientCard;

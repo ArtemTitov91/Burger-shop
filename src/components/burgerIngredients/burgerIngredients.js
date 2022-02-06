@@ -2,7 +2,7 @@ import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientsStyle from "./burgerIngredients.module.css";
 import BurgerElements from "../burgerElements/burgerElements";
-import BurgerPice from "../burgerPice/burgerPice";
+import IngredientCard from "../ingredientCard/ingredientCard";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 
@@ -31,7 +31,7 @@ const createBurger = (items, type, oneClick) => {
     })
     .map((data) => (
       <li key={data._id}>
-      <BurgerPice
+      <IngredientCard
         oneClick={() => {
           oneClick(data.image, data.name);
         }}

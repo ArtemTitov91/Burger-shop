@@ -72,6 +72,7 @@ const App = () => {
         )}
       </main>
       <Modal modal={order.mainModal}
+      orderModal = {order.modalOrder}
       oneClick = {closeButton}
       >
         {order.modalOrder && <OrderDetails 
