@@ -1,0 +1,39 @@
+.order{
+  min-height: 500px;
+  margin: 100px 0 0;
+
+}
+
+.button {
+  background-color: transparent;
+  border-radius: 50%;
+  margin-bottom: 50px;
+  display: block;
+  margin: 70px auto 70px;
+  
+}
+
+.text {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.closeButton {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  /* top: 100px; */
+  /* right: -30px; */
+  bottom: 10px;
+  cursor: pointer;
+  height: 120px;
+}
+
+.count{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin: 50px auto;
+}
