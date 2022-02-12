@@ -1,15 +1,19 @@
-import React from "react";
+import React, {useContext} from "react";
 import ingredientDetails from "../ingredientDetails/ingredientDetails.module.css";
 import {
   CheckMarkIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderDetails from "./orderDetails.module.css";
 import PropTypes from 'prop-types';
-// import Modal from '../modal/modal';
 
 
 
-const OrderDetails = ({oneClick}) => {
+
+const OrderDetails = ({ oneClick }) => {
+
+
+  
+
 
   return(
     <div className={orderDetails.order}>

@@ -10,20 +10,20 @@ const checkResponse = (res) => {
 };
 
 const config = {
-  baseUrl: "https://norma.nomoreparties.space/api/ingredients",
+  baseUrl: "https://norma.nomoreparties.space/api/",
   headers: {
     "Content-Type": "application/json",
   },
 };
 
-const useFetch = () => {
+const useFetchGet = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
   useEffect(() => {
     setLoading(true);
-    fetch(config.baseUrl, {
+    fetch(`${config.baseUrl}ingredients`, {
       headers: config.headers,
     })
       .then(checkResponse)
@@ -46,4 +46,9 @@ const useFetch = () => {
   }
 }
 
-export default useFetch
+export default useFetchGet
+
+export {
+  checkResponse,
+  config 
+}
