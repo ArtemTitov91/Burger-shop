@@ -16,20 +16,29 @@ const config = {
   },
 };
 
-const useFetchGet = () => {
+const useFetch = ( url, order,
+  {
+    method,
+    headers = config.headers,
+    body = null
+  }) => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+  const [res, setRes] = useState(null);
   useEffect(() => {
     setLoading(true);
-    fetch(`${config.baseUrl}ingredients`, {
-      headers: config.headers,
+    fetch(url, {
+      method: method,
+      headers: headers,
+      body: body
     })
       .then(checkResponse)
       .then((data) => {
         setLoading(false)
         setData(data.data)
+        setRes(data.order)
       }
       )
       .catch((err) => {
@@ -37,16 +46,16 @@ const useFetchGet = () => {
         setError(error)
       }
       );
-  }, []);
+  }, [order]);
 
 
 
   return {
-    loading, error, data
+    loading, error, data, res
   }
 }
 
-export default useFetchGet
+export default useFetch
 
 export {
   checkResponse,

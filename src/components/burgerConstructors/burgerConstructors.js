@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   ConstructorElement,
   DragIcon,
@@ -6,9 +6,9 @@ import {
 import burgerConstructor from "./burgerConstructor.module.css";
 import PayOrder from "../payOrder/payOrder";
 import PropTypes from 'prop-types';
-import {menuItemPropTypes} from '../../utils/constants';
-import {IngredientContext, OrderNumber} from '../../utils/service/ingridientsContext';
-import useFetchPost from '../../hooks/useFetchPost';
+import { menuItemPropTypes } from '../../utils/constants';
+import { IngredientContext} from '../../utils/service/ingridientsContext';
+
 
 
 const burgerPices = (items) =>
@@ -27,45 +27,36 @@ const burgerPices = (items) =>
     }
   });
 
-  burgerPices.propTypes = {
-    items: PropTypes.array.isRequired,
-    el: menuItemPropTypes
-  };
+burgerPices.propTypes = {
+  items: PropTypes.array.isRequired,
+  el: menuItemPropTypes
+};
 
 
-const BurgerConstructors = ({ oneClick }) => {
-  const {data} = useContext(IngredientContext);
-  const [ingredients, setIngridient] = useState({
-    data: data,
-    bun:'',
-    burgerInsides:[]
-  });
+const BurgerConstructors = ({ oneClick, ingredients, setIngridient }) => {
+  const { data } = useContext(IngredientContext);
 
-  const ingredientsId = ingredients.data.map((el) =>{ return el._id});
-  const {post} = useContext(OrderNumber);
 
-  const { loadingPost, errorPost, dataPost } = useFetchPost(ingredientsId, post);
+  useEffect(() => {
+    let bun = '';
+    const burgerInsides = [];
+    const data = ingredients.data;
 
-useEffect (() => {
-  let bun = '';
-  const burgerInsides = [];
-  const data = ingredients.data;
-
-  data.forEach((el) => {
-    if(el.type === 'bun'){
-      bun = el
-    } else {
-      burgerInsides.push(el);
-    }
-  });
-  setIngridient({data, bun, burgerInsides});
-}, []);
+    data.forEach((el) => {
+      if (el.type === 'bun') {
+        bun = el
+      } else {
+        burgerInsides.push(el);
+      }
+    });
+    setIngridient({ data, bun, burgerInsides });
+  }, []);
 
 
   const burgerPrice = useMemo(
     () => {
       let price = 0;
-      
+
       price += ingredients.bun.price * 2;
       ingredients.burgerInsides.forEach((el) => {
         price += el.price;
@@ -99,16 +90,18 @@ useEffect (() => {
           thumbnail={ingredients.bun.image_mobile}
         />
       </div>
-      <PayOrder 
-      oneClick={oneClick}
-       count={burgerPrice}
-       ingredients={ingredients.data}/>
+      <PayOrder
+        oneClick={oneClick}
+        count={burgerPrice}
+        ingredients={ingredients.data} />
     </div>
   );
 };
 
 BurgerConstructors.propTypes = {
   oneClick: PropTypes.func.isRequired,
+  ingredients: PropTypes.object.isRequired,
+  setIngridient: PropTypes.func.isRequired,
   el: menuItemPropTypes
 };
 

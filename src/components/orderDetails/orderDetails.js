@@ -5,20 +5,28 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderDetails from "./orderDetails.module.css";
 import PropTypes from 'prop-types';
+import { OrderNumber } from '../../utils/service/ingridientsContext';
+import useFetch from '../../hooks/useFetch';
+import { CompletionTriggerKind } from "typescript";
 
 
 
+const OrderDetails = ({ oneClick, ingredients }) => {
+  const ingredientsId = ingredients.data.map((el) => { return el._id });
+  const { post } = useContext(OrderNumber);
 
-const OrderDetails = ({ oneClick }) => {
+  const { loading, error, res } = useFetch('https://norma.nomoreparties.space/api/orders', post,
+  {method: "POST",
+  body: JSON.stringify({ "ingredients": ingredientsId })
+  });
 
-
-  
-
+  if(loading) return <div>ЗАГРУЗКА</div>
+  if(error) return <div>ОШИБКА</div>
 
   return(
     <div className={orderDetails.order}>
         <p className={"text text_type_digits-large " + orderDetails.title}>
-          034536
+          {res && res.number}
         </p>
         <p className={"text text_type_main-medium " + ingredientDetails.text}>
           Идентификатор заказа

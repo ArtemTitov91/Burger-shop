@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../header/header";
 import BurgerIngredients from "../burgerIngredients/burgerIngredients";
 import appStyle from "./app.module.css";
 import BurgerConstructors from "../burgerConstructors/burgerConstructors";
-import useFetchGet from '../../hooks/useFetchGet';
+import useFetch from '../../hooks/useFetch';
 import Modal from "../modal/modal";
 import { OrderDetails } from "../orderDetails";
 import { IngredientDetails } from "../ingredientDetails";
@@ -12,7 +12,9 @@ import {IngredientContext, OrderNumber} from '../../utils/service/ingridientsCon
 
 
 const App = () => {
-  const { loading, error, data } = useFetchGet();
+  const { loading, error, data } = useFetch(
+    'https://norma.nomoreparties.space/api/ingredients', '', {method:"GET"});
+
 
   const [order, setOrder] = useState({
     mainModal: false,
@@ -23,12 +25,17 @@ const App = () => {
     post: true
   });
 
-  // const [ingredients, setIngridient] = useState({
-  //   data: data,
-  //   bun:'',
-  //   burgerInsides:[]
-  // });
-  // console.log(ingredients.data);
+  const [ingredients, setIngridient] = useState({
+    data: [],
+    bun:'',
+    burgerInsides:[]
+  });
+useEffect(() => {
+  
+ setIngridient((prev)=>{
+   return {...prev, data: data }
+ })
+}, [data])
 
   const closeButton = () => {
     setOrder({
@@ -38,14 +45,12 @@ const App = () => {
       modalIngredient: false,
     })
   }
-  
+  if(loading) return <div>ЗАГРУЗКА</div>
+  if(error) return <div>ОШИБКА</div>
 
- 
   return (
     <>
       <Header />
-      {loading && "Загрузка"}
-        {error && "Ошибка"}
       <OrderNumber.Provider value={{
         post: order.post}}>
       <main className={appStyle.main} tabIndex={0}>
@@ -63,9 +68,9 @@ const App = () => {
             }}
           />
         )}
-        
-        {data && (
-          <BurgerConstructors
+          {ingredients.data?.length && (<BurgerConstructors
+          setIngridient={setIngridient}
+          ingredients ={ingredients}
             oneClick={(img, name) => {
               setOrder({
                 ...order,
@@ -76,8 +81,7 @@ const App = () => {
                 post: !order.post
               });
             }}
-          />
-        )}
+          />)}
         </IngredientContext.Provider>
       </main>
       <Modal modal={order.mainModal}
@@ -86,6 +90,7 @@ const App = () => {
       >
         
         {order.modalOrder && <OrderDetails 
+        ingredients = {ingredients}
         oneClick = {closeButton}
         />}
         
