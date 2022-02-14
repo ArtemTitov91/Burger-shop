@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useContext} from "react";
 import {
   ConstructorElement,
   DragIcon,
@@ -7,7 +7,7 @@ import burgerConstructor from "./burgerConstructor.module.css";
 import PayOrder from "../payOrder/payOrder";
 import PropTypes from 'prop-types';
 import { menuItemPropTypes } from '../../utils/constants';
-import { IngredientContext} from '../../utils/service/ingridientsContext';
+import {IngredientContext} from '../../service/ingredientsContext';
 
 
 
@@ -27,16 +27,9 @@ const burgerPices = (items) =>
     }
   });
 
-burgerPices.propTypes = {
-  items: PropTypes.array.isRequired,
-  el: menuItemPropTypes
-};
-
-
-const BurgerConstructors = ({ oneClick, ingredients, setIngridient }) => {
-  const { data } = useContext(IngredientContext);
-
-
+const BurgerConstructors = ({ openOrder, setIngridient }) => {
+  const { ingredients } = useContext(IngredientContext);
+  
   useEffect(() => {
     let bun = '';
     const burgerInsides = [];
@@ -91,7 +84,7 @@ const BurgerConstructors = ({ oneClick, ingredients, setIngridient }) => {
         />
       </div>
       <PayOrder
-        oneClick={oneClick}
+        openOrder={openOrder}
         count={burgerPrice}
         ingredients={ingredients.data} />
     </div>
@@ -99,10 +92,9 @@ const BurgerConstructors = ({ oneClick, ingredients, setIngridient }) => {
 };
 
 BurgerConstructors.propTypes = {
-  oneClick: PropTypes.func.isRequired,
-  ingredients: PropTypes.object.isRequired,
+  openOrder: PropTypes.func.isRequired,
   setIngridient: PropTypes.func.isRequired,
-  el: menuItemPropTypes
+  ingredients: menuItemPropTypes
 };
 
 export default BurgerConstructors;

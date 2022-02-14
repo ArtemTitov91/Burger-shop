@@ -7,7 +7,7 @@ import { ModalOverlay } from '../modalOverlay';
 
 const modalDom = document.getElementById("modals");
 
-const Modal = ({ oneClick, modal, children}) => {
+const Modal = ({ onClose, modal, children}) => {
 
   useEffect(() => {
     document.addEventListener("keydown", escClose);
@@ -21,7 +21,7 @@ const Modal = ({ oneClick, modal, children}) => {
   const overflowClose = (e) => {
     document.querySelectorAll("#count").forEach((el) => {
       if (e.target === el) {
-        { oneClick() };
+        { onClose() };
       }
     });
   };
@@ -29,21 +29,21 @@ const Modal = ({ oneClick, modal, children}) => {
   const escClose = (e) => {
     e.preventDefault()
     if (e.key === "Escape") {
-      { oneClick() };
+      { onClose() };
     }
   };
 
   return ReactDOM.createPortal(
-    (<div className={modal ? modalStyle.modal : modalStyle.off}>
+    (
+    <div className={modal ? modalStyle.cover : modalStyle.off}>
       <div className={modal ? modalStyle.modal : modalStyle.off}>
-          <button onClick={oneClick} className={modalStyle.button}>
+          <button onClick={onClose} className={modalStyle.button}>
             <CloseIcon type={"primary"} />
           </button>
         {children}
       </div>
       <ModalOverlay />
     </div>
-
     ),
     modalDom
   )
@@ -51,7 +51,7 @@ const Modal = ({ oneClick, modal, children}) => {
 }
 
 Modal.propTypes = {
-  oneClick: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   children: PropTypes.array.isRequired,
   modal: PropTypes.bool.isRequired,
 };

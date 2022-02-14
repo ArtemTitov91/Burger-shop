@@ -5,13 +5,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderDetails from "./orderDetails.module.css";
 import PropTypes from 'prop-types';
-import { OrderNumber } from '../../utils/service/ingridientsContext';
+import { OrderNumber } from '../../service/ingredientsContext';
 import useFetch from '../../hooks/useFetch';
-import { CompletionTriggerKind } from "typescript";
 
 
 
-const OrderDetails = ({ oneClick, ingredients }) => {
+
+const OrderDetails = ({ onClose, ingredients }) => {
   const ingredientsId = ingredients.data.map((el) => { return el._id });
   const { post } = useContext(OrderNumber);
 
@@ -32,7 +32,7 @@ const OrderDetails = ({ oneClick, ingredients }) => {
           Идентификатор заказа
         </p>
         <button
-          onClick={oneClick}
+          onClick={onClose}
           type="button"
           className={orderDetails.button}
         >
@@ -54,7 +54,7 @@ const OrderDetails = ({ oneClick, ingredients }) => {
 };
 
 OrderDetails.propTypes = {
-  oneClick: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default OrderDetails;

@@ -5,7 +5,7 @@ import BurgerElements from "../burgerElements/burgerElements";
 import IngredientCard from "../ingredientCard/ingredientCard";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
-import {IngredientContext} from '../../utils/service/ingridientsContext';
+import {IngredientContext} from '../../service/ingredientsContext';
 
 
 const TurnTab = () => {
@@ -26,7 +26,7 @@ const TurnTab = () => {
 };
 
 
-const createBurger = (items, type, oneClick) => {
+const createBurger = (items, type, openIngredient) => {
 
   
   return items
@@ -36,8 +36,8 @@ const createBurger = (items, type, oneClick) => {
     .map((data) => (
       <li key={data._id}>
       <IngredientCard
-        oneClick={() => {
-          oneClick(data.image, data.name);
+        openIngredient={() => {
+          openIngredient(data.image, data.name);
         }}
         alt={data.name}
         reactNode={<CurrencyIcon type="primary" />}
@@ -57,7 +57,7 @@ createBurger.propTypes = {
 }
 
 
-const BurgerIngredients = ({oneClick}) => {
+const BurgerIngredients = ({openIngredient}) => {
   const { data } = useContext(IngredientContext);
 
   return (
@@ -68,17 +68,17 @@ const BurgerIngredients = ({oneClick}) => {
         <BurgerElements
         el = '101'
           label="Булки"
-          reactNode={createBurger(data, "bun", oneClick)}
+          reactNode={createBurger(data, "bun", openIngredient)}
         />
         <BurgerElements
         el = '102'
           label="Соусы"
-          reactNode={createBurger(data, "sauce", oneClick)}
+          reactNode={createBurger(data, "sauce", openIngredient)}
         />
         <BurgerElements
         el = '103'
           label="Начинки"
-          reactNode={createBurger(data, "main", oneClick)}
+          reactNode={createBurger(data, "main", openIngredient)}
         />
       </ul>
     </div>
@@ -86,7 +86,7 @@ const BurgerIngredients = ({oneClick}) => {
 };
 
 BurgerIngredients.propTypes = {
-  oneClick: PropTypes.func.isRequired,
+  openIngredient: PropTypes.func.isRequired,
 }
 
 export default BurgerIngredients;

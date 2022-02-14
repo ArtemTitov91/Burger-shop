@@ -7,7 +7,7 @@ import useFetch from '../../hooks/useFetch';
 import Modal from "../modal/modal";
 import { OrderDetails } from "../orderDetails";
 import { IngredientDetails } from "../ingredientDetails";
-import {IngredientContext, OrderNumber} from '../../utils/service/ingridientsContext';
+import {IngredientContext, OrderNumber} from '../../service/ingredientsContext';
 
 
 
@@ -25,14 +25,14 @@ const App = () => {
     post: true
   });
 
-  const [ingredients, setIngridient] = useState({
+  const [ingredients, setIngredient] = useState({
     data: [],
     bun:'',
     burgerInsides:[]
   });
 useEffect(() => {
   
- setIngridient((prev)=>{
+ setIngredient((prev)=>{
    return {...prev, data: data }
  })
 }, [data])
@@ -54,10 +54,10 @@ useEffect(() => {
       <OrderNumber.Provider value={{
         post: order.post}}>
       <main className={appStyle.main} tabIndex={0}>
-        <IngredientContext.Provider value={{data:data}}>
+        <IngredientContext.Provider value={{data:data, ingredients:ingredients}}>
         {data && (
           <BurgerIngredients
-            oneClick={(img, name) => {
+            openIngredient={(img, name) => {
               setOrder({
                 ...order,
                 mainModal: true,
@@ -69,9 +69,8 @@ useEffect(() => {
           />
         )}
           {ingredients.data?.length && (<BurgerConstructors
-          setIngridient={setIngridient}
-          ingredients ={ingredients}
-            oneClick={(img, name) => {
+          setIngridient={setIngredient}
+          openOrder={(img, name) => {
               setOrder({
                 ...order,
                 mainModal: true,
@@ -84,21 +83,20 @@ useEffect(() => {
           />)}
         </IngredientContext.Provider>
       </main>
-      <Modal modal={order.mainModal}
-      orderModal = {order.modalOrder}
-      oneClick = {closeButton}
+       {order.mainModal && (<Modal
+       modal = {order.mainModal}
+      onClose = {closeButton}
       >
-        
         {order.modalOrder && <OrderDetails 
         ingredients = {ingredients}
-        oneClick = {closeButton}
+        onClose = {closeButton}
         />}
         
         {order.modalIngredient && <IngredientDetails 
         image={order.image}
         name={order.name}
         />}
-      </Modal>
+      </Modal>)}
       </OrderNumber.Provider>
     </>
   );

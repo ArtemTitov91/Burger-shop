@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 
 
-const PayOrder = ({ingredients, count, oneClick }) => {
+const PayOrder = ({ count, openOrder }) => {
 
   
   return (
@@ -19,7 +19,7 @@ const PayOrder = ({ingredients, count, oneClick }) => {
           </p>
         <CurrencyIcon type="primary" />
       </div> 
-      <Button onClick={oneClick} type="primary" size="large">
+      <Button onClick={openOrder} type="primary" size="large">
         Оформить Заказ
       </Button>
     </div>
@@ -27,9 +27,8 @@ const PayOrder = ({ingredients, count, oneClick }) => {
 };
 
 PayOrder.propTypes = {
-  oneClick: PropTypes.func.isRequired,
+  openOrder: PropTypes.func.isRequired,
   count: PropTypes.number.isRequired,
-  // ingredients: PropTypes.array.isRequired, 
 };
 
 export default PayOrder;
