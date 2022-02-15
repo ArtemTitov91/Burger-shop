@@ -6,15 +6,20 @@ import {
 import payOrder from "./payOrder.module.css";
 import PropTypes from 'prop-types';
 
-const PayOrder = ({ oneClick }) => {
 
+
+const PayOrder = ({ count, openOrder }) => {
+
+  
   return (
     <div className={"mt-10 pr-3 " + payOrder.payOrder}>
       <div className={"mr-10 " + payOrder.price}>
-        <p className="text text_type_digits-medium">777</p>
+        <p className="text text_type_digits-medium">
+          {isNaN(count) ? 0 : count}
+          </p>
         <CurrencyIcon type="primary" />
-      </div>
-      <Button onClick={oneClick} type="primary" size="large">
+      </div> 
+      <Button onClick={openOrder} type="primary" size="large">
         Оформить Заказ
       </Button>
     </div>
@@ -22,7 +27,8 @@ const PayOrder = ({ oneClick }) => {
 };
 
 PayOrder.propTypes = {
-  oneClick: PropTypes.func.isRequired,
+  openOrder: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
 };
 
 export default PayOrder;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useContext} from "react";
 import {
   ConstructorElement,
   DragIcon,
@@ -6,7 +6,8 @@ import {
 import burgerConstructor from "./burgerConstructor.module.css";
 import PayOrder from "../payOrder/payOrder";
 import PropTypes from 'prop-types';
-import {menuItemPropTypes} from '../../utils/constants';
+import { menuItemPropTypes } from '../../utils/constants';
+import {IngredientContext} from '../../service/ingredientsContext';
 
 
 
@@ -26,59 +27,74 @@ const burgerPices = (items) =>
     }
   });
 
-  burgerPices.propTypes = {
-    items: PropTypes.array.isRequired,
-    el: menuItemPropTypes
-  };
+const BurgerConstructors = ({ openOrder, setIngridient }) => {
+  const { ingredients } = useContext(IngredientContext);
+  
+  useEffect(() => {
+    let bun = '';
+    const burgerInsides = [];
+    const data = ingredients.data;
 
-const burgerBun = (items, id) =>
-  items.find((el) => {
-    return el._id === id;
-  });
+    data.forEach((el) => {
+      if (el.type === 'bun') {
+        bun = el
+      } else {
+        burgerInsides.push(el);
+      }
+    });
+    setIngridient({ data, bun, burgerInsides });
+  }, []);
 
-  burgerBun.propTypes = {
-    id: PropTypes.string.isRequired,
-    items: PropTypes.array.isRequired,
-    el: menuItemPropTypes
-  };
 
-const BurgerConstructors = ({ items, oneClick }) => {
+  const burgerPrice = useMemo(
+    () => {
+      let price = 0;
 
-  const bun = burgerBun(items, "60d3b41abdacab0026a733c6");
+      price += ingredients.bun.price * 2;
+      ingredients.burgerInsides.forEach((el) => {
+        price += el.price;
+      });
 
+      return price;
+    },
+    [ingredients]
+  );
   return (
     <div>
       <div className={burgerConstructor.burgerConstructor}>
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={bun.name + " (верх)"}
-          price={bun.price}
-          thumbnail={bun.image_mobile}
+          text={ingredients.bun.name + " (верх)"}
+          price={ingredients.bun.price}
+          thumbnail={ingredients.bun.image_mobile}
         />
         <div
           style={{ display: "flex", flexDirection: "column", gap: "15px" }}
           className={burgerConstructor.burgerComponents}
         >
-          {burgerPices(items)}
+          {burgerPices(ingredients.burgerInsides)}
         </div>
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={bun.name + " (низ)"}
-          price={bun.price}
-          thumbnail={bun.image_mobile}
+          text={ingredients.bun.name + " (низ)"}
+          price={ingredients.bun.price}
+          thumbnail={ingredients.bun.image_mobile}
         />
       </div>
-      <PayOrder oneClick={oneClick} />
+      <PayOrder
+        openOrder={openOrder}
+        count={burgerPrice}
+        ingredients={ingredients.data} />
     </div>
   );
 };
 
 BurgerConstructors.propTypes = {
-  oneClick: PropTypes.func.isRequired,
-  items: PropTypes.array.isRequired,
-  el: menuItemPropTypes
+  openOrder: PropTypes.func.isRequired,
+  setIngridient: PropTypes.func.isRequired,
+  ingredients: menuItemPropTypes
 };
 
 export default BurgerConstructors;

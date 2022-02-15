@@ -2,10 +2,10 @@ import React from "react";
 import ingredientCard from "./ingredientCard.module.css";
 import PropTypes from 'prop-types';
 
-const IngredientCard = ({ image, alt, price, reactNode, name, oneClick }) => {
+const IngredientCard = ({ image, alt, price, reactNode, name, openIngredient }) => {
 
   return (
-    <div className={ingredientCard.pice} onClick={oneClick}>
+    <div className={ingredientCard.pice} onClick={openIngredient}>
       <img className="mb-2" alt={alt} src={image}></img>
       <div className={ingredientCard.discription}>
         <p
@@ -34,7 +34,7 @@ IngredientCard.propTypes = {
   price: PropTypes.number.isRequired,
   reactNode: PropTypes.element.isRequired,
   name: PropTypes.string.isRequired,
-  oneClick: PropTypes.func.isRequired
+  openIngredient: PropTypes.func.isRequired
 };
 
 export default IngredientCard;

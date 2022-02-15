@@ -15,8 +15,7 @@ const menuItemPropTypes = PropTypes.shape({
     __v: PropTypes.number.isRequired,
 });
 
-
 export {
-    menuItemPropTypes
+    menuItemPropTypes,
 }
 
