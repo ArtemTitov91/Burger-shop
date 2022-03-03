@@ -1,11 +1,41 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import ingredientCard from "./ingredientCard.module.css";
 import PropTypes from 'prop-types';
+import { MODAL } from '../../service/action/cart';
+import { useDrag } from "react-dnd";
+import { useSelector, useDispatch } from 'react-redux';
 
-const IngredientCard = ({ image, alt, price, reactNode, name, openIngredient }) => {
+const IngredientCard = ({ id, image, alt, price, reactNode, name }) => {
+
+  const { ingredients } = useSelector(state => state.reducer);
+
+
+  const [, ElemRef] = useDrag({
+    type: 'outsideItems',
+    item: { id },
+
+  })
+
+  const countPices = useMemo(() => {
+    return ingredients.filter(el => el._id === id).length
+  }, [ingredients])
+
+  const dispatch = useDispatch();
+  const openIngredient = () => {
+    dispatch({
+      type: MODAL,
+      mainModal: true,
+      modalIngredient: true,
+      image: image,
+      name: name
+    })
+  }
 
   return (
-    <div className={ingredientCard.pice} onClick={openIngredient}>
+    <li className={ingredientCard.pice}
+      onClick={openIngredient}
+      id={id}
+      ref={ElemRef}>
       <img className="mb-2" alt={alt} src={image}></img>
       <div className={ingredientCard.discription}>
         <p
@@ -23,7 +53,8 @@ const IngredientCard = ({ image, alt, price, reactNode, name, openIngredient }) 
       >
         {name}
       </p>
-    </div>
+      {countPices > 0 && <div className={ingredientCard.count}>{countPices}</div>}
+    </li>
   );
 };
 
@@ -34,7 +65,9 @@ IngredientCard.propTypes = {
   price: PropTypes.number.isRequired,
   reactNode: PropTypes.element.isRequired,
   name: PropTypes.string.isRequired,
-  openIngredient: PropTypes.func.isRequired
+  // __v: PropTypes.number.isRequired,
 };
 
 export default IngredientCard;
+
+

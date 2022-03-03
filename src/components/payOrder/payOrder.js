@@ -5,11 +5,20 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import payOrder from "./payOrder.module.css";
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import {MODAL} from '../../service/action/cart';
 
 
+const PayOrder = ({count}) => {
 
-const PayOrder = ({ count, openOrder }) => {
-
+  const dispatch = useDispatch();
+  const openOrder = () => {
+    dispatch( {
+      type: MODAL,
+      mainModal: true,
+      modalOrder: true,
+    })
+  }
   
   return (
     <div className={"mt-10 pr-3 " + payOrder.payOrder}>
@@ -27,7 +36,6 @@ const PayOrder = ({ count, openOrder }) => {
 };
 
 PayOrder.propTypes = {
-  openOrder: PropTypes.func.isRequired,
   count: PropTypes.number.isRequired,
 };
 

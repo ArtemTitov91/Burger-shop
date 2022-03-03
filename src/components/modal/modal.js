@@ -4,10 +4,22 @@ import modalStyle from './modal.module.css';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 import { ModalOverlay } from '../modalOverlay';
+import {useSelector, useDispatch } from 'react-redux';
+import {MODAL} from '../../service/action/cart';
 
 const modalDom = document.getElementById("modals");
 
-const Modal = ({ onClose, modal, children}) => {
+const Modal = ({children}) => {
+const mainModal = useSelector(store=>store.reducer.mainModal)
+  const dispatch = useDispatch();
+  const closeButton = () => {
+    dispatch( {
+      type: MODAL,
+      mainModal: false,
+      modalOrder: false,
+      modalIngredient: false,
+    })
+  }
 
   useEffect(() => {
     document.addEventListener("keydown", escClose);
@@ -18,10 +30,11 @@ const Modal = ({ onClose, modal, children}) => {
     };
   }, []);
 
+
   const overflowClose = (e) => {
     document.querySelectorAll("#count").forEach((el) => {
       if (e.target === el) {
-        { onClose() };
+         closeButton();
       }
     });
   };
@@ -29,15 +42,15 @@ const Modal = ({ onClose, modal, children}) => {
   const escClose = (e) => {
     e.preventDefault()
     if (e.key === "Escape") {
-      { onClose() };
+       closeButton();
     }
   };
 
   return ReactDOM.createPortal(
     (
-    <div className={modal ? modalStyle.cover : modalStyle.off}>
-      <div className={modal ? modalStyle.modal : modalStyle.off}>
-          <button onClick={onClose} className={modalStyle.button}>
+    <div className={mainModal ? modalStyle.cover : modalStyle.off}>
+      <div className={mainModal ? modalStyle.modal : modalStyle.off}>
+          <button onClick={closeButton} className={modalStyle.button}>
             <CloseIcon type={"primary"} />
           </button>
         {children}
@@ -51,9 +64,7 @@ const Modal = ({ onClose, modal, children}) => {
 }
 
 Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
   children: PropTypes.array.isRequired,
-  modal: PropTypes.bool.isRequired,
 };
 
 export default Modal;

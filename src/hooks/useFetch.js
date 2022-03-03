@@ -1,6 +1,4 @@
 
-import { useState, useEffect } from 'react';
-
 const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
@@ -16,44 +14,40 @@ const config = {
   },
 };
 
-const useFetch = ( url, order,
-  {
-    method,
-    headers = config.headers,
-    body = null
-  }) => {
+const useFetch = ( url,
+  dispatch,
+  success,
+  failed,
+  request,
+  method,
+    body = null,
+) => {
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
-  const [res, setRes] = useState(null);
-  useEffect(() => {
-    setLoading(true);
+    dispatch({
+      type: request
+    });
     fetch(url, {
       method: method,
-      headers: headers,
+      headers: config.headers,
       body: body
     })
       .then(checkResponse)
       .then((data) => {
-        setLoading(false)
-        setData(data.data)
-        setRes(data.order)
+        dispatch({
+          type: success,
+          order: data.order,
+          data: data.data,
+        });
       }
       )
       .catch((err) => {
-        setLoading(false)
-        setError(error)
+        dispatch({
+          type: failed
+        });
       }
       );
-  }, [order]);
+  };
 
-
-
-  return {
-    loading, error, data, res
-  }
-}
 
 export default useFetch
 
