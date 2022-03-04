@@ -22,12 +22,13 @@ const BurgerPices = ({ image_mobile, price, id, name }) => {
 
     const moveCard = useCallback((id, atIndex) => {
         const { burgerElement, index } = findPice(id);
-        const arr = burgerInsides;
+        const arr = burgerInsides.slice();
         arr.splice(index, 1)
+        arr.splice(atIndex, 0, burgerElement)
         
         dispatch({
             type: SORT_INGREDIENTS,
-            burgerInsides: arr.splice(atIndex, 0, burgerElement)
+            burgerInsides: arr
         })
     }, [findPice, burgerInsides]);
     console.log(burgerInsides);
