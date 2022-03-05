@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
     ConstructorElement,
     DragIcon,
@@ -7,6 +7,7 @@ import burgerConstructor from "../burgerConstructors/burgerConstructor.module.cs
 import { useDrag, useDrop } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_INGREDIENTS, SORT_INGREDIENTS } from '../../service/action/cart';
+import PropTypes from 'prop-types';
 
 const BurgerPices = ({ image_mobile, price, id, name }) => {
 
@@ -25,13 +26,13 @@ const BurgerPices = ({ image_mobile, price, id, name }) => {
         const arr = burgerInsides.slice();
         arr.splice(index, 1)
         arr.splice(atIndex, 0, burgerElement)
-        
+
         dispatch({
             type: SORT_INGREDIENTS,
             burgerInsides: arr
         })
     }, [findPice, burgerInsides]);
-    console.log(burgerInsides);
+
     const originalIndex = findPice(id).index;
 
     const [, transition] = useDrag(() => ({
@@ -90,6 +91,13 @@ const BurgerPices = ({ image_mobile, price, id, name }) => {
             />
         </div>
     )
+}
+
+BurgerPices.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    image_mobile: PropTypes.string.isRequired,
 }
 
 export default BurgerPices

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import ingredientCard from "./ingredientCard.module.css";
 import PropTypes from 'prop-types';
 import { MODAL } from '../../service/action/cart';

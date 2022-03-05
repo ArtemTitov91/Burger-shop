@@ -7,22 +7,28 @@ import Modal from "../modal/modal";
 import { OrderDetails } from "../orderDetails";
 import { IngredientDetails } from "../ingredientDetails";
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems } from '../../service/action/cart';
+import { getItems, MODAL } from '../../service/action/cart';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-
 
 const App = () => {
   const { items, itemsRequest, itemsFailed,
     modalOrder, modalIngredient, mainModal } =
     useSelector(state => state.reducer);
-  // document.addEventListener('click' , (e) => {console.log(e.currentTarget)});  
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getItems())
   }, [dispatch])
 
+  const closeButton = () => {
+    dispatch({
+      type: MODAL,
+      mainModal: false,
+      modalOrder: false,
+      modalIngredient: false,
+    })
+  }
 
   if (itemsRequest) return <div>ЗАГРУЗКА</div>
   if (itemsFailed) return <div>ОШИБКА</div>
@@ -36,7 +42,7 @@ const App = () => {
           {items?.length && (<BurgerConstructors />)}
         </main>)}
       </DndProvider>
-      {mainModal && (<Modal>
+      {mainModal && (<Modal onClose={closeButton}>
         {modalOrder && <OrderDetails />}
         {modalIngredient && <IngredientDetails />}
       </Modal>)}

@@ -6,28 +6,28 @@ import {
 import payOrder from "./payOrder.module.css";
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import {MODAL} from '../../service/action/cart';
+import { MODAL } from '../../service/action/cart';
 
 
-const PayOrder = ({count}) => {
+const PayOrder = ({ count }) => {
 
   const dispatch = useDispatch();
   const openOrder = () => {
-    dispatch( {
+    dispatch({
       type: MODAL,
       mainModal: true,
       modalOrder: true,
     })
   }
-  
+
   return (
     <div className={"mt-10 pr-3 " + payOrder.payOrder}>
       <div className={"mr-10 " + payOrder.price}>
         <p className="text text_type_digits-medium">
           {isNaN(count) ? 0 : count}
-          </p>
+        </p>
         <CurrencyIcon type="primary" />
-      </div> 
+      </div>
       <Button onClick={openOrder} type="primary" size="large">
         Оформить Заказ
       </Button>

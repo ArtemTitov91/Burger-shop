@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
 
-const{image, name} = useSelector(store=>(store.reducer))
+  const { image, name } = useSelector(store => (store.reducer))
 
   return (
-      <div className={ingredientDetails.ingredient}>
-        <p className={"text text_type_main-large " + ingredientDetails.title}>Детали ингридиента</p>
+    <div className={ingredientDetails.ingredient}>
+      <p className={"text text_type_main-large " + ingredientDetails.title}>Детали ингридиента</p>
       <img src={image} alt={name}></img>
       <p className={"text text_type_main-medium " + ingredientDetails.text}>
         {name}

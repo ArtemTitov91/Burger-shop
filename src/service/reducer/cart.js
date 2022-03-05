@@ -70,7 +70,8 @@ export const reducer = (state = store, action) => {
       return { ...state, orderFailed: true, orderRequest: false };
     }
     case INGREDIENTS_PICK: {
-      return { ...state, bun: action.bun, burgerInsides: action.burgerInsides,
+      return {
+        ...state, bun: action.bun, burgerInsides: action.burgerInsides,
       }
     }
     case MODAL: {
@@ -91,8 +92,8 @@ export const reducer = (state = store, action) => {
       return {
         ...state,
         ingredients: state.items.find(el => el._id === action.id).type === 'bun' ?
-        state.ingredients.filter((el) => el.type !== 'bun').concat(state.items.filter(el => el._id === action.id)) :
-        state.ingredients.concat(state.items.filter(el => el._id === action.id))
+          state.ingredients.filter((el) => el.type !== 'bun').concat(state.items.filter(el => el._id === action.id)) :
+          state.ingredients.concat(state.items.filter(el => el._id === action.id))
       };
     }
     case SORT_INGREDIENTS: {

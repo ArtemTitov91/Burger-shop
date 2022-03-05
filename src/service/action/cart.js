@@ -32,12 +32,12 @@ export const getItems = () => {
             GET_ITEMS_SUCCESS,
             GET_ITEMS_FAILED,
             GET_ITEMS_REQUEST,
-             "GET"
-            )
+            "GET"
+        )
     }
 }
 
-export const postOrder = (id) =>{
+export const postOrder = (id) => {
     return (dispatch) => {
         useFetch(
             `${url}orders`,
@@ -45,8 +45,8 @@ export const postOrder = (id) =>{
             POST_ORDER_SUCCESS,
             POST_ORDER_FAILED,
             POST_ORDER_REQUEST,
-             "POST",
-             JSON.stringify({ "ingredients":id})
-            )
+            "POST",
+            JSON.stringify({ "ingredients": id })
+        )
     }
 }

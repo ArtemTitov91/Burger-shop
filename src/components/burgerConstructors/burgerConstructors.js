@@ -4,7 +4,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructor from "./burgerConstructor.module.css";
 import PayOrder from "../payOrder/payOrder";
-import { menuItemPropTypes } from '../../utils/constants';
 import { useSelector, useDispatch } from 'react-redux';
 import { INGREDIENTS_PICK, UPDATE_TYPE } from '../../service/action/cart';
 import { useDrop } from "react-dnd";
@@ -15,8 +14,7 @@ const burgerPices = (items) => {
   return items.map((el, index) => {
     return (
       <BurgerPices
-        key={index}
-        index={index}
+        key={index + Date.now()}
         id={el._id}
         name={el.name}
         price={el.price}
@@ -33,7 +31,7 @@ const BurgerConstructors = () => {
   const [, transfer] = useDrop(() => ({ accept: 'insideItems' }));
 
   useEffect(() => {
-    const burgerInsides = items;
+    const burgerInsides = [];
     let bun = items.find(el => el.type === 'bun');
 
     ingredients.forEach((el) => {
@@ -105,10 +103,6 @@ const BurgerConstructors = () => {
         ingredients={items.data} />
     </div>
   );
-};
-
-BurgerConstructors.propTypes = {
-  ingredients: menuItemPropTypes
 };
 
 export default BurgerConstructors;

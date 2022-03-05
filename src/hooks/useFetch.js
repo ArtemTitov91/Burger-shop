@@ -14,44 +14,44 @@ const config = {
   },
 };
 
-const useFetch = ( url,
+const useFetch = (url,
   dispatch,
   success,
   failed,
   request,
   method,
-    body = null,
+  body = null,
 ) => {
 
-    dispatch({
-      type: request
-    });
-    fetch(url, {
-      method: method,
-      headers: config.headers,
-      body: body
-    })
-      .then(checkResponse)
-      .then((data) => {
-        dispatch({
-          type: success,
-          order: data.order,
-          data: data.data,
-        });
-      }
-      )
-      .catch((err) => {
-        dispatch({
-          type: failed
-        });
-      }
-      );
-  };
+  dispatch({
+    type: request
+  });
+  fetch(url, {
+    method: method,
+    headers: config.headers,
+    body: body
+  })
+    .then(checkResponse)
+    .then((data) => {
+      dispatch({
+        type: success,
+        order: data.order,
+        data: data.data,
+      });
+    }
+    )
+    .catch((err) => {
+      dispatch({
+        type: failed
+      });
+    }
+    );
+};
 
 
 export default useFetch
 
 export {
   checkResponse,
-  config 
+  config
 }
