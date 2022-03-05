@@ -76,13 +76,14 @@ const BurgerConstructors = () => {
   return (
     <div>
       <div className={burgerConstructor.burgerConstructor} ref={drop}>
-        <ConstructorElement
+        {ingredients.length === 0 && "Переместите выбранные вами ингредиенты" }
+        {ingredients.length > 0 && <ConstructorElement
           type="top"
           isLocked={true}
           text={bun.name + " (верх)"}
           price={bun.price}
           thumbnail={bun.image_mobile}
-        />
+        />}
         <div
           ref={transfer}
           style={{ display: "flex", flexDirection: "column", gap: "15px" }}
@@ -90,13 +91,13 @@ const BurgerConstructors = () => {
         >
           {burgerPices(burgerInsides)}
         </div>
-        <ConstructorElement
+        {ingredients.length > 0 && <ConstructorElement
           type="bottom"
           isLocked={true}
           text={bun.name + " (низ)"}
           price={bun.price}
           thumbnail={bun.image_mobile}
-        />
+        />}
       </div>
       <PayOrder
         count={burgerPrice}
