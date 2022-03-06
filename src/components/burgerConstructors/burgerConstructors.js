@@ -8,13 +8,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { INGREDIENTS_PICK, UPDATE_TYPE } from '../../service/action/cart';
 import { useDrop } from "react-dnd";
 import BurgerPices from '../burgerPices/burgerPices';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const burgerPices = (items) => {
-  return items.map((el, index) => {
+  return items.map((el,) => {
     return (
       <BurgerPices
-        key={index + Date.now()}
+        key={uuidv4()}
         id={el._id}
         name={el.name}
         price={el.price}
@@ -32,19 +33,20 @@ const BurgerConstructors = () => {
 
   useEffect(() => {
     const burgerInsides = [];
-    let bun = items.find(el => el.type === 'bun');
+    let bun = [];
+
 
     ingredients.forEach((el) => {
       if (el.type === 'bun') {
         bun = el
-      } else {
+      }else{
         burgerInsides.push(el);
       }
     });
     dispatch({
       type: INGREDIENTS_PICK,
       bun: bun,
-      burgerInsides: burgerInsides,
+      burgerInsides: burgerInsides
     })
   }, [ingredients]);
 
@@ -76,7 +78,7 @@ const BurgerConstructors = () => {
   return (
     <div>
       <div className={burgerConstructor.burgerConstructor} ref={drop}>
-        {ingredients.length === 0 && "Переместите выбранные вами ингредиенты" }
+        {ingredients.length === 0 && "Переместите выбранные вами вид булочки"}
         {ingredients.length > 0 && <ConstructorElement
           type="top"
           isLocked={true}
@@ -86,7 +88,6 @@ const BurgerConstructors = () => {
         />}
         <div
           ref={transfer}
-          style={{ display: "flex", flexDirection: "column", gap: "15px" }}
           className={burgerConstructor.burgerComponents}
         >
           {burgerPices(burgerInsides)}

@@ -3,7 +3,7 @@ import burgerElementsStyle from "./burgerElements.module.css";
 import PropTypes from 'prop-types';
 
 
-const BurgerElements = ({ label, reactNode, el, className }) => {
+const BurgerElements = ({ label, reactNode, className }) => {
 
   return (
     <li className={className}>
@@ -15,7 +15,7 @@ const BurgerElements = ({ label, reactNode, el, className }) => {
 
 BurgerElements.propTypes = {
   label: PropTypes.string.isRequired,
-  el: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
   reactNode: PropTypes.array.isRequired
 }
 

@@ -20,6 +20,9 @@
   width: 100%;
   overflow-y: scroll;
   height: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .burgerComponent {

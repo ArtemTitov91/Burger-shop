@@ -5,7 +5,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderDetails from "./orderDetails.module.css";
 import { useSelector, useDispatch } from 'react-redux';
-import { MODAL } from '../../service/action/cart';
 import { postOrder } from '../../service/action/cart';
 
 
@@ -13,14 +12,7 @@ const OrderDetails = () => {
   const { order, orderRequest, orderFailed, ingredients } =
     useSelector(state => state.reducer);
   const dispatch = useDispatch();
-  const closeButton = () => {
-    dispatch({
-      type: MODAL,
-      mainModal: false,
-      modalOrder: false,
-      modalIngredient: false,
-    })
-  }
+
 
   const ingredientsId = ingredients.map((el) => { return el._id })
 

@@ -7,6 +7,7 @@ export const INGREDIENTS_PICK = 'INGREDIENTS_PICK';
 export const INGREDIENT_CURRENT = 'INGREDIENT_CURRENT';
 
 export const MODAL = 'MODAL';
+export const ORDER = 'ORDER';
 
 export const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST';
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';

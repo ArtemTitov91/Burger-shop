@@ -50,7 +50,6 @@ const createBurger = (items, type) => {
 createBurger.propTypes = {
   items: PropTypes.array.isRequired,
   type: PropTypes.string.isRequired,
-  el: PropTypes.array.isRequired
 }
 
 

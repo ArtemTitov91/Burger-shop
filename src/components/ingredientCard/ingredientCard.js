@@ -65,7 +65,6 @@ IngredientCard.propTypes = {
   price: PropTypes.number.isRequired,
   reactNode: PropTypes.element.isRequired,
   name: PropTypes.string.isRequired,
-  // __v: PropTypes.number.isRequired,
 };
 
 export default IngredientCard;

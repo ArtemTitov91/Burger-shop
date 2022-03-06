@@ -5,11 +5,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import payOrder from "./payOrder.module.css";
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { MODAL } from '../../service/action/cart';
 
 
+
 const PayOrder = ({ count }) => {
+
+  const ingredients = useSelector(state => state.reducer.ingredients);
 
   const dispatch = useDispatch();
   const openOrder = () => {
@@ -28,7 +31,12 @@ const PayOrder = ({ count }) => {
         </p>
         <CurrencyIcon type="primary" />
       </div>
-      <Button onClick={openOrder} type="primary" size="large">
+      <Button
+       onClick={openOrder}
+        type="primary"
+         size="large"
+         disabled={ingredients.length === 0}
+         >
         Оформить Заказ
       </Button>
     </div>

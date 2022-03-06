@@ -10,7 +10,7 @@ import {
   SCROLL_CHANGE,
   UPDATE_TYPE,
   DELETE_INGREDIENTS,
-  SORT_INGREDIENTS
+  SORT_INGREDIENTS,
 } from '../action/cart';
 
 export const store = {
@@ -64,14 +64,14 @@ export const reducer = (state = store, action) => {
       };
     }
     case POST_ORDER_SUCCESS: {
-      return { ...state, orderFailed: false, order: action.order, orderRequest: false };
+      return { ...state, orderFailed: false, order: action.order, orderRequest: false, ingredients:[] };
     }
     case POST_ORDER_FAILED: {
       return { ...state, orderFailed: true, orderRequest: false };
     }
     case INGREDIENTS_PICK: {
       return {
-        ...state, bun: action.bun, burgerInsides: action.burgerInsides,
+        ...state, bun: action.bun, burgerInsides: action.burgerInsides
       }
     }
     case MODAL: {
