@@ -15,7 +15,7 @@ const burgerPices = (items) => {
   return items.map((el,) => {
     return (
       <BurgerPices
-        key={uuidv4()}
+      key = {el.constructorKey}
         id={el._id}
         name={el.name}
         price={el.price}
@@ -70,7 +70,7 @@ const BurgerConstructors = () => {
       dispatch({
         type: UPDATE_TYPE,
         ...itemId,
-        // pices
+        constructorKey: uuidv4()
       });
     },
   });

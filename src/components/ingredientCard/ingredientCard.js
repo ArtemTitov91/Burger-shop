@@ -5,6 +5,7 @@ import { MODAL } from '../../service/action/cart';
 import { useDrag } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
 
+
 const IngredientCard = ({ id, image, alt, price, reactNode, name }) => {
 
   const { ingredients } = useSelector(state => state.reducer);
@@ -14,11 +15,12 @@ const IngredientCard = ({ id, image, alt, price, reactNode, name }) => {
     type: 'outsideItems',
     item: { id },
 
+
   })
 
   const countPices = useMemo(() => {
     return ingredients.filter(el => el._id === id).length
-  }, [ingredients])
+  }, [ingredients, id])
 
   const dispatch = useDispatch();
   const openIngredient = () => {

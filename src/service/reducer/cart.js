@@ -40,7 +40,7 @@ export const store = {
   orderRequest: false,
   orderFailed: false,
 
-  draggable: [],
+  draggable: []
 }
 
 export const reducer = (state = store, action) => {
@@ -93,7 +93,7 @@ export const reducer = (state = store, action) => {
         ...state,
         ingredients: state.items.find(el => el._id === action.id).type === 'bun' ?
           state.ingredients.filter((el) => el.type !== 'bun').concat(state.items.filter(el => el._id === action.id)) :
-          state.ingredients.concat(state.items.filter(el => el._id === action.id))
+          state.ingredients.concat(state.items.filter(el => { return el._id === action.id && (el.constructorKey = action.constructorKey)}))
       };
     }
     case SORT_INGREDIENTS: {
