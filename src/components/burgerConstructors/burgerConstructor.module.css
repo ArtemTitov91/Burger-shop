@@ -20,10 +20,17 @@
   width: 100%;
   overflow-y: scroll;
   height: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .burgerComponent {
   display: flex;
   align-items: center;
   width: 100%;
+}
+
+.burgerComponentNone {
+  display:none;
 }

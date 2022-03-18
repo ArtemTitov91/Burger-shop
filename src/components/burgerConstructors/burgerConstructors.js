@@ -1,100 +1,110 @@
-import React, { useEffect, useMemo, useContext} from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   ConstructorElement,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructor from "./burgerConstructor.module.css";
 import PayOrder from "../payOrder/payOrder";
-import PropTypes from 'prop-types';
-import { menuItemPropTypes } from '../../utils/constants';
-import {IngredientContext} from '../../service/ingredientsContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { INGREDIENTS_PICK, UPDATE_TYPE } from '../../service/action/cart';
+import { useDrop } from "react-dnd";
+import BurgerPices from '../burgerPices/burgerPices';
+import { v4 as uuidv4 } from 'uuid';
+
+//изменено
+const burgerPices = (items) => {
+  return items.map((el,) => {
+    return (
+      <BurgerPices
+      key = {el.constructorKey}
+        id={el._id}
+        name={el.name}
+        price={el.price}
+        image_mobile={el.image_mobile} />
+    )
+  })
+}
 
 
 
-const burgerPices = (items) =>
-  items.map((el, index) => {
-    if (el.type !== "bun") {
-      return (
-        <div key={index} className={burgerConstructor.burgerComponent}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={el.name}
-            price={el.price}
-            thumbnail={el.image_mobile}
-          />
-        </div>
-      );
-    }
-  });
+const BurgerConstructors = () => {
+  const { ingredients, bun, burgerInsides, items } = useSelector(state => state.reducer);
+  const dispatch = useDispatch();
+  const [, transfer] = useDrop(() => ({ accept: 'insideItems' }));
 
-const BurgerConstructors = ({ openOrder, setIngridient }) => {
-  const { ingredients } = useContext(IngredientContext);
-  
   useEffect(() => {
-    let bun = '';
     const burgerInsides = [];
-    const data = ingredients.data;
+    let bun = [];
 
-    data.forEach((el) => {
+
+    ingredients.forEach((el) => {
       if (el.type === 'bun') {
         bun = el
-      } else {
+      }else{
         burgerInsides.push(el);
       }
     });
-    setIngridient({ data, bun, burgerInsides });
-  }, []);
-
+    dispatch({
+      type: INGREDIENTS_PICK,
+      bun: bun,
+      burgerInsides: burgerInsides
+    })
+  }, [ingredients]);
 
   const burgerPrice = useMemo(
     () => {
       let price = 0;
 
-      price += ingredients.bun.price * 2;
-      ingredients.burgerInsides.forEach((el) => {
+      price += bun.price * 2;
+      burgerInsides.forEach((el) => {
         price += el.price;
       });
 
       return price;
     },
-    [ingredients]
+    [bun, burgerInsides]
   );
+
+  const [, drop] = useDrop({
+    accept: "outsideItems",
+    drop(itemId) {
+      dispatch({
+        type: UPDATE_TYPE,
+        ...itemId,
+        constructorKey: uuidv4()
+      });
+    },
+  });
+
   return (
     <div>
-      <div className={burgerConstructor.burgerConstructor}>
-        <ConstructorElement
+      <div className={burgerConstructor.burgerConstructor} ref={drop}>
+        {ingredients.length === 0 && "Переместите выбранные вами вид булочки"}
+        {ingredients.length > 0 && <ConstructorElement
           type="top"
           isLocked={true}
-          text={ingredients.bun.name + " (верх)"}
-          price={ingredients.bun.price}
-          thumbnail={ingredients.bun.image_mobile}
-        />
+          text={bun.name + " (верх)"}
+          price={bun.price}
+          thumbnail={bun.image_mobile}
+        />}
         <div
-          style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+          ref={transfer}
           className={burgerConstructor.burgerComponents}
         >
-          {burgerPices(ingredients.burgerInsides)}
+          {burgerPices(burgerInsides)}
         </div>
-        <ConstructorElement
+        {ingredients.length > 0 && <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={ingredients.bun.name + " (низ)"}
-          price={ingredients.bun.price}
-          thumbnail={ingredients.bun.image_mobile}
-        />
+          text={bun.name + " (низ)"}
+          price={bun.price}
+          thumbnail={bun.image_mobile}
+        />}
       </div>
       <PayOrder
-        openOrder={openOrder}
         count={burgerPrice}
-        ingredients={ingredients.data} />
+        ingredients={items.data} />
     </div>
   );
-};
-
-BurgerConstructors.propTypes = {
-  openOrder: PropTypes.func.isRequired,
-  setIngridient: PropTypes.func.isRequired,
-  ingredients: menuItemPropTypes
 };
 
 export default BurgerConstructors;

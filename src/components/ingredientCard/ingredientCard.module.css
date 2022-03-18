@@ -6,6 +6,7 @@
   text-align: center;
   margin: 0 0 40px 30px;
   cursor: pointer;
+  position: relative;
 }
 
 .discription {
@@ -18,4 +19,22 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.count{
+position: absolute;
+top: 0;
+right: 0;
+width: 32px;
+height: 32px;
+border-radius: 50%;
+background-color: #4C4CFF;
+font-family: Iceland;
+font-size: 28px;
+font-style: normal;
+font-weight: 400;
+letter-spacing: 0em;
+text-align: center;
+padding:15px auto 0;
+
 }

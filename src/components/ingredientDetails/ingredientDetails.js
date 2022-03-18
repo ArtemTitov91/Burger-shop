@@ -1,14 +1,14 @@
 import React from "react";
 import ingredientDetails from "./ingredientDetails.module.css";
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
+const IngredientDetails = () => {
 
-const IngredientDetails = ( {image, name }) => {
+  const { image, name } = useSelector(store => (store.reducer))
 
   return (
-    
-      <div className={ingredientDetails.ingredient}>
-        <p className={"text text_type_main-large " + ingredientDetails.title}>Детали ингридиента</p>
+    <div className={ingredientDetails.ingredient}>
+      <p className={"text text_type_main-large " + ingredientDetails.title}>Детали ингридиента</p>
       <img src={image} alt={name}></img>
       <p className={"text text_type_main-medium " + ingredientDetails.text}>
         {name}
@@ -43,9 +43,5 @@ const IngredientDetails = ( {image, name }) => {
   )
 };
 
-IngredientDetails.propTypes = {
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-};
 
 export default IngredientDetails;

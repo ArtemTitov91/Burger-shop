@@ -1,5 +1,5 @@
-.parent{
-    width: 1920px;
-    position: relative;
-    margin: auto;
-  }
+.parent {
+  max-width: 1920px;
+  position: relative;
+  margin: 0 auto;
+}

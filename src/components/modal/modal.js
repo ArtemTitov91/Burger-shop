@@ -4,46 +4,39 @@ import modalStyle from './modal.module.css';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 import { ModalOverlay } from '../modalOverlay';
+import { useSelector } from 'react-redux';
+
 
 const modalDom = document.getElementById("modals");
 
-const Modal = ({ onClose, modal, children}) => {
+const Modal = ({ onClose, children }) => {
+  const mainModal = useSelector(store => store.reducer.mainModal)
 
   useEffect(() => {
     document.addEventListener("keydown", escClose);
-    document.addEventListener("click", overflowClose);
     return () => {
       document.removeEventListener("keydown", escClose);
-      document.removeEventListener("click", overflowClose);
     };
   }, []);
-
-  const overflowClose = (e) => {
-    document.querySelectorAll("#count").forEach((el) => {
-      if (e.target === el) {
-        { onClose() };
-      }
-    });
-  };
 
   const escClose = (e) => {
     e.preventDefault()
     if (e.key === "Escape") {
-      { onClose() };
+      onClose();
     }
   };
 
   return ReactDOM.createPortal(
     (
-    <div className={modal ? modalStyle.cover : modalStyle.off}>
-      <div className={modal ? modalStyle.modal : modalStyle.off}>
+      <div className={mainModal ? modalStyle.cover : modalStyle.off}>
+        <div className={mainModal ? modalStyle.modal : modalStyle.off}>
           <button onClick={onClose} className={modalStyle.button}>
             <CloseIcon type={"primary"} />
           </button>
-        {children}
+          {children}
+        </div>
+        <ModalOverlay onClose={onClose} />
       </div>
-      <ModalOverlay />
-    </div>
     ),
     modalDom
   )
@@ -51,9 +44,8 @@ const Modal = ({ onClose, modal, children}) => {
 }
 
 Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
   children: PropTypes.array.isRequired,
-  modal: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;
