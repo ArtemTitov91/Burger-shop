@@ -10,7 +10,7 @@ import { useDrop } from "react-dnd";
 import BurgerPices from '../burgerPices/burgerPices';
 import { v4 as uuidv4 } from 'uuid';
 
-
+//изменено
 const burgerPices = (items) => {
   return items.map((el,) => {
     return (
