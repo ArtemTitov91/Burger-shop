@@ -38,7 +38,7 @@ const Header = () => {
         <HeaderItems
           icon={<ProfileIcon type="secondary" />}
           discription="Личный кабинет"
-          link="#"
+          link = {'/login'}
         />
       </div>
     </header>
