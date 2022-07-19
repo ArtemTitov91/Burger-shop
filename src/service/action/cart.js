@@ -17,6 +17,14 @@ export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
 export const POST_ORDER_FAILED = 'POST_ORDER_FAILED';
 
+export const POST_PASSWORD_REQUEST = 'POST_PASSWORD_REQUEST';
+export const POST_PASSWORD_SUCCESS = 'POST_PASSWORD_SUCCESS';
+export const POST_PASSWORD_FAILED = 'POST_PASSWORD_FAILED';
+
+export const POST_RESTORE_PASSWORD_REQUEST = 'POST_RESTORE_PASSWORD_REQUEST';
+export const POST_RESTORE_PASSWORD_SUCCESS = 'POST_RESTORE_PASSWORD_SUCCESS';
+export const POST_RESTORE_PASSWORD_FAILED = 'POST_RESTORE_PASSWORD_FAILED';
+
 export const SCROLL_CHANGE = 'SCROLL_CHANGE';
 
 export const UPDATE_TYPE = 'UPDATE_TYPE';
@@ -49,5 +57,34 @@ export const postOrder = (id) => {
             "POST",
             JSON.stringify({ "ingredients": id })
         )
+        }
+}
+
+export const queryCode = (email) => {
+    return (dispatch) => {
+        useFetch(
+            `${url}password-reset`,
+            dispatch,
+            POST_PASSWORD_SUCCESS,
+            POST_PASSWORD_FAILED,
+            POST_PASSWORD_REQUEST,
+            "POST",
+            JSON.stringify({ "email": email})
+        )
     }
 }
+
+export const queryNewPassword = (obj) => {
+    return (dispatch) => {
+        useFetch(
+            `${url}password-reset/reset`,
+            dispatch,
+            POST_RESTORE_PASSWORD_SUCCESS,
+            POST_RESTORE_PASSWORD_FAILED,
+            POST_RESTORE_PASSWORD_REQUEST,
+            "POST",
+            JSON.stringify(obj)
+        )
+    }
+}
+

@@ -11,6 +11,12 @@ import {
   UPDATE_TYPE,
   DELETE_INGREDIENTS,
   SORT_INGREDIENTS,
+  POST_PASSWORD_REQUEST,
+  POST_PASSWORD_SUCCESS,
+  POST_PASSWORD_FAILED,
+  POST_RESTORE_PASSWORD_REQUEST,
+  POST_RESTORE_PASSWORD_SUCCESS,
+  POST_RESTORE_PASSWORD_FAILED
 } from '../action/cart';
 
 export const store = {
@@ -40,6 +46,14 @@ export const store = {
   orderRequest: false,
   orderFailed: false,
 
+  recoverPassword: null,
+  recoverPasswordRequest: false,
+  recoverPasswordFailed: false,
+
+  restorePassword: null,
+  restorePasswordRequest: false,
+  restorePasswordFailed: false,
+
   draggable: []
 }
 
@@ -52,7 +66,7 @@ export const reducer = (state = store, action) => {
       };
     }
     case GET_ITEMS_SUCCESS: {
-      return { ...state, itemsFailed: false, items: action.data, itemsRequest: false };
+      return { ...state, itemsFailed: false, items: action.data.data, itemsRequest: false };
     }
     case GET_ITEMS_FAILED: {
       return { ...state, itemsFailed: true, itemsRequest: false };
@@ -64,10 +78,34 @@ export const reducer = (state = store, action) => {
       };
     }
     case POST_ORDER_SUCCESS: {
-      return { ...state, orderFailed: false, order: action.order, orderRequest: false, ingredients:[] };
+      return { ...state, orderFailed: false, order: action.order, orderRequest: false, ingredients: [] };
     }
     case POST_ORDER_FAILED: {
       return { ...state, orderFailed: true, orderRequest: false };
+    }
+    case POST_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        recoverPasswordRequest: true
+      };
+    }
+    case POST_PASSWORD_SUCCESS: {
+      return { ...state, recoverPasswordFailed: false, recoverPassword: action.data, recoverPasswordRequest: false };
+    }
+    case POST_PASSWORD_FAILED: {
+      return { ...state, recoverPasswordFailed: true, recoverPasswordRequest: false };
+    }
+    case POST_RESTORE_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        restorePasswordRequest: true
+      };
+    }
+    case POST_RESTORE_PASSWORD_SUCCESS: {
+      return { ...state, restorePasswordFailed: false, restorePassword: action.data, restorePasswordRequest: false };
+    }
+    case POST_RESTORE_PASSWORD_FAILED: {
+      return { ...state, restorePasswordFailed: true, restorePasswordRequest: false };
     }
     case INGREDIENTS_PICK: {
       return {
@@ -93,7 +131,7 @@ export const reducer = (state = store, action) => {
         ...state,
         ingredients: state.items.find(el => el._id === action.id).type === 'bun' ?
           state.ingredients.filter((el) => el.type !== 'bun').concat(state.items.filter(el => el._id === action.id)) :
-          state.ingredients.concat(state.items.filter(el => { return el._id === action.id && (el.constructorKey = action.constructorKey)}))
+          state.ingredients.concat(state.items.filter(el => { return el._id === action.id && (el.constructorKey = action.constructorKey) }))
       };
     }
     case SORT_INGREDIENTS: {

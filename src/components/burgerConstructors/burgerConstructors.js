@@ -48,7 +48,7 @@ const BurgerConstructors = () => {
       bun: bun,
       burgerInsides: burgerInsides
     })
-  }, [ingredients]);
+  }, [ingredients, dispatch]);
 
   const burgerPrice = useMemo(
     () => {

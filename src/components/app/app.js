@@ -10,6 +10,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getItems, MODAL } from '../../service/action/cart';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { Route, Routes } from 'react-router-dom';
+import {
+  Profile,
+  Login,
+  Registration,
+  RecoverPassword,
+  ForgotPassword
+} from '../../pages';
 
 const App = () => {
   const { items, itemsRequest, itemsFailed,
@@ -35,18 +43,25 @@ const App = () => {
 
   return (
     <>
-      <Header />
-      <DndProvider backend={HTML5Backend}>
-        {items && (<main className={appStyle.main} tabIndex={0}>
-          <BurgerIngredients />
-          {items?.length && (<BurgerConstructors />)}
-        </main>)}
-      </DndProvider>
+    <Header />
+        <Routes>
+          <Route path="/" element = { <DndProvider backend={HTML5Backend}>
+              {items && (<main className={appStyle.main} tabIndex={0}>
+                <BurgerIngredients />
+                {items?.length && (<BurgerConstructors />)}
+              </main>)}
+            </DndProvider>} />
+          <Route path="/login" element = {<Login />} />
+          <Route path="/login/registration" element = {<Registration />} />
+          <Route path="/login/forgot-password" element = {<RecoverPassword />} />
+          <Route path="/login/forgot-password/reset-password" element = {<ForgotPassword />} />
+          <Route path="/login/profile" element = {<Profile />} />
+        </Routes>
       {mainModal && (<Modal onClose={closeButton}>
         {modalOrder && <OrderDetails />}
         {modalIngredient && <IngredientDetails />}
       </Modal>)}
-    </>
+    </> 
   );
 
 };

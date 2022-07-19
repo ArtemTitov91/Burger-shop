@@ -3,3 +3,15 @@
   position: relative;
   margin: 0 auto;
 }
+
+.input{
+  margin-top: 24px;
+  
+}
+
+.input_size_default{
+  width: 480px !important;
+  height: 64px !important;
+}
+
+
