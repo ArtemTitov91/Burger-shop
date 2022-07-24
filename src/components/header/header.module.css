@@ -8,6 +8,8 @@
   z-index: 1;
   margin: 0 auto;
   padding: 0 340px;
+  position: fixed;
+  top: 0;
 }
 
 .info {

@@ -36,8 +36,9 @@ const useFetch = (url,
       dispatch({
         type: success,
         order: data.order,
-        data: data.data,
+        data: data,
       });
+      // console.log(data);
     }
     )
     .catch((err) => {

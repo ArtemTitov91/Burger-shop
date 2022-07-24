@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 const BurgerPices = ({ image_mobile, price, id, name }) => {
 
     const { ingredients, burgerInsides } = useSelector(state => state.reducer);
+    const dispatch = useDispatch();
 
     const findPice = useCallback((id) => {
         const burgerElement = burgerInsides.filter((el) => el._id === id)[0];
@@ -31,7 +32,7 @@ const BurgerPices = ({ image_mobile, price, id, name }) => {
             type: SORT_INGREDIENTS,
             burgerInsides: arr
         })
-    }, [findPice, burgerInsides]);
+    }, [dispatch, findPice, burgerInsides]);
 
     const originalIndex = findPice(id).index;
 
@@ -58,9 +59,6 @@ const BurgerPices = ({ image_mobile, price, id, name }) => {
             }
         },
     }), [findPice, moveCard]);
-
-
-    const dispatch = useDispatch();
 
     const deleteButton = (id) => {
         const arr = ingredients;
