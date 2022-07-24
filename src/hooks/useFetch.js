@@ -38,6 +38,7 @@ const useFetch = (url,
         order: data.order,
         data: data,
       });
+      // console.log(data);
     }
     )
     .catch((err) => {

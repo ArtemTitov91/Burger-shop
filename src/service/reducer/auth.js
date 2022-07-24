@@ -17,6 +17,8 @@ export const authStore = {
     authorizationFailed: false,
 }
 
+
+
 export const authReducer = (state = authStore, action) => {
     switch (action.type) {
         case POST_REGISTRATION_REQUEST: {
@@ -38,7 +40,7 @@ export const authReducer = (state = authStore, action) => {
             };
         }
         case POST_AUTHORIZATION_SUCCESS: {
-            return { ...state,authorizationFailed: false, authorization: action.data, authorizationRequest: false };
+            return { ...state, authorizationFailed: false, authorization: action.data, authorizationRequest: false };
         }
         case POST_AUTHORIZATION_FAILED: {
             return { ...state, authorizationFailed: true, authorizationRequest: false };

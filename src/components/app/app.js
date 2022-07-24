@@ -55,7 +55,7 @@ const App = () => {
           <Route path="/login/registration" element = {<Registration />} />
           <Route path="/login/forgot-password" element = {<RecoverPassword />} />
           <Route path="/login/forgot-password/reset-password" element = {<ForgotPassword />} />
-          <Route path="/login/profile" element = {<Profile />} />
+          <Route path="/profile" element = {<Profile />} />
         </Routes>
       {mainModal && (<Modal onClose={closeButton}>
         {modalOrder && <OrderDetails />}

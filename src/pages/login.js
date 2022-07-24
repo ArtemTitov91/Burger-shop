@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import loginStyle from "./login.module.css";
 import {
     Input,
@@ -16,24 +16,24 @@ export const Login = () => {
     const [password, setPassword] = React.useState('')
     const onChange = e => { setPassword(e.target.value) }
 
-    const {authorization, authorizationRequest, authorizationFailed } =
-        useSelector(state => state.reducer);
+    const { authorization, authorizationRequest, authorizationFailed } =
+        useSelector(state => state.authReducer);
     const dispatch = useDispatch();
     const onClickAuthorization = useCallback((e) => {
         e.preventDefault()
-        const userInfo =  {
-            "email": email, 
-            "password": password, 
+        const userInfo = {
+            "email": email,
+            "password": password,
         }
         dispatch(queryAuthorization(userInfo))
         setEmail('');
         setPassword('');
-        // history.replace({ pathname: '/' })
+
     }, [email, password, dispatch])
-    console.log(authorization);
+
     if (authorizationRequest) return <div>ЗАГРУЗКА</div>
     if (authorizationFailed) return <div>ОШИБКА</div>
-    
+    // console.log(authorization);
     return (
         <div className={loginStyle.container}>
             <form className={loginStyle.loginBox}>
@@ -50,27 +50,30 @@ export const Login = () => {
                     size='default'
                 />
                 <PasswordInput onChange={onChange} value={password} name={'password'} />
-                <div className={loginStyle.button}><Button
-                    onClick={onClickAuthorization}
-                    type="primary"
-                    size="medium">Войти </Button></div>
-                <div className={loginStyle.settings}>
-                    <p className={"text text_type_main-default text_color_inactive " + loginStyle.text}>
-                    Вы—новый пользователь?
-                    </p>
-                    <Link to = "/login/registration">
-                    <Button className='button-link' type="secondary" size="medium">
-                        Зарегестрироваться
-                    </Button></Link>
+                <div className={loginStyle.button}>
+                    <Link to="/profle"> 
+                        <Button 
+                            onClick={onClickAuthorization}
+                            type="primary"
+                            size="medium">Войти </Button></Link>
                 </div>
                 <div className={loginStyle.settings}>
-                <p className={"text text_type_main-default text_color_inactive " + loginStyle.text}>
-                    Забыли пароль?
+                    <p className={"text text_type_main-default text_color_inactive " + loginStyle.text}>
+                        Вы—новый пользователь?
                     </p>
-                    <Link to = "/login/forgot-password">
-                    <Button className={loginStyle.link} type="secondary" size="medium">
-                        Восстановить пароль
-                    </Button>
+                    <Link to="/login/registration">
+                        <Button className='button-link' type="secondary" size="medium">
+                            Зарегестрироваться
+                        </Button></Link>
+                </div>
+                <div className={loginStyle.settings}>
+                    <p className={"text text_type_main-default text_color_inactive " + loginStyle.text}>
+                        Забыли пароль?
+                    </p>
+                    <Link to="/login/forgot-password">
+                        <Button className={loginStyle.link} type="secondary" size="medium">
+                            Восстановить пароль
+                        </Button>
                     </Link>
                 </div>
             </form>
